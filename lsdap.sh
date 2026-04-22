@@ -110,10 +110,10 @@
             mkdir ./lsdap
             touch ./lsdap/file.ldif
             touch ./lsdap/data.conf
-            wget "https://raw.githubusercontent.com/TFGoscar/lsdap.sh/refs/heads/main/ou.sh" -O "./lsdap/ou.sh"
-            wget "https://raw.githubusercontent.com/TFGoscar/lsdap.sh/refs/heads/main/grp.sh" -O "./lsdap/grp.sh"
-            wget "https://raw.githubusercontent.com/TFGoscar/lsdap.sh/refs/heads/main/pablo.sh" -O "./lsdap/pablo.sh"
-            wget "https://raw.githubusercontent.com/TFGoscar/lsdap.sh/refs/heads/main/usr.sh" -O "./lsdap/usr.sh"
+            wget "https://raw.githubusercontent.com/cl0b3r/lsdap.sh/refs/heads/main/ou.sh" -O "./lsdap/ou.sh"
+            wget "https://raw.githubusercontent.com/cl0b3r/lsdap.sh/refs/heads/main/grp.sh" -O "./lsdap/grp.sh"
+            wget "https://raw.githubusercontent.com/cl0b3r/lsdap.sh/refs/heads/main/pablo.sh" -O "./lsdap/pablo.sh"
+            wget "https://raw.githubusercontent.com/cl0b3r/lsdap.sh/refs/heads/main/usr.sh" -O "./lsdap/usr.sh"
 
             chmod 755 ./lsdap
             chmod 755 ./lsdap/*
