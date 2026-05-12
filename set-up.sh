@@ -1,5 +1,5 @@
 #!/bin/bash
-# ROOT CHECK
+# Root check
     whoami=$(whoami)
     if [ "$whoami" != "root" ]; then
         echo "set-up.sh: access denied"
@@ -19,6 +19,8 @@
     turquoiseColour="\e[0;36m\033[1m"
     grayColour="\e[0;37m\033[1m"
 #---------------------------------------
+
+# Read password with "*" instead of showing the characters
 read_password() {
     local var_name="$1"
     local password=""
@@ -47,6 +49,7 @@ read_password() {
     # Asignar la contraseña a la variable especificada
     eval "$var_name='$password'"
 }
+
 # -----------------------------------------------------------------------
 # LOGO
   clear
@@ -64,9 +67,7 @@ ${endcolor}\n"
 # Creación de carpeta para el correcto funcionamiento del script.
     lsdapdirectory=$(ls /etc | grep "lsdap" | head -1)
     if [ "$lsdapdirectory" = "lsdap" ]; then
-    echo "Tienes el programa instalado. Se esta borrando."
-    rm -r /etc/lsdap
-    rm -r /usr/bin/lsdget
+    echo "LSADP is already installed if you need help run lsdap --help."
 
     else
         read -p "- Do you want config this equipe like a server or just like a client?(S/C) --> " configmode
@@ -173,5 +174,7 @@ ${endcolor}\n"
             echo "lastgid=5000" >> /etc/lsdap/data.conf
             echo "lsdappassword=$ldappassword" >> /etc/lsdap/data.conf
             rm ./set-up.sh
+        else
+            echo "Wrong option. Aborting."
         fi
     fi

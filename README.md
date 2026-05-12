@@ -4,7 +4,7 @@ Before use this script you must have a ldap domain installed.
 
 To run this script you only must execute the nexts commands.
 ```c
-wget "https://raw.githubusercontent.com/cl0b3r/lsdap.sh/refs/heads/main/set-up.sh"
+wget "https://raw.githubusercontent.com/cl0b3r/lsdap/refs/heads/main/set-up.sh"
 chmod +x set-up.sh
 sudo ./set-up.sh
 ```
