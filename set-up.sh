@@ -153,19 +153,22 @@ ${endcolor}\n"
             mkdir -p /etc/lsdap/bins
             touch /etc/lsdap/file.ldif
             touch /etc/lsdap/data.conf
-            wget "https://raw.githubusercontent.com/cl0b3r/lsdap.sh/refs/heads/main/bins/ou.sh" -O "/etc/lsdap/bins/ou.sh" 2>/dev/null
-            wget "https://raw.githubusercontent.com/cl0b3r/lsdap.sh/refs/heads/main/bins/grp.sh" -O "/etc/lsdap/bins/grp.sh" 2>/dev/null
-            wget "https://raw.githubusercontent.com/cl0b3r/lsdap.sh/refs/heads/main/bins/pablo.sh" -O "/etc/lsdap/bins/pablo.sh" 2>/dev/null
-            wget "https://raw.githubusercontent.com/cl0b3r/lsdap.sh/refs/heads/main/bins/usr.sh" -O "/etc/lsdap/bins/usr.sh" 2>/dev/null
-            wget "https://raw.githubusercontent.com/cl0b3r/lsdap.sh/refs/heads/main/bins/new-lsdap.sh" -O "/etc/lsdap/bins/new-lsdap.sh" 2>/dev/null
-            wget "https://raw.githubusercontent.com/cl0b3r/lsdap.sh/refs/heads/main/bins/del-ldap.sh" -O "/etc/lsdap/bins/del-ldap.sh" 2>/dev/null
+            wget "https://raw.githubusercontent.com/cl0b3r/lsdap/refs/heads/main/bins/ou.sh" -O "/etc/lsdap/bins/ou.sh" 2>/dev/null
+            wget "https://raw.githubusercontent.com/cl0b3r/lsdap/refs/heads/main/bins/grp.sh" -O "/etc/lsdap/bins/grp.sh" 2>/dev/null
+            wget "https://raw.githubusercontent.com/cl0b3r/lsdap/refs/heads/main/bins/pablo.sh" -O "/etc/lsdap/bins/pablo.sh" 2>/dev/null
+            wget "https://raw.githubusercontent.com/cl0b3r/lsdap/refs/heads/main/bins/usr.sh" -O "/etc/lsdap/bins/usr.sh" 2>/dev/null
+            wget "https://raw.githubusercontent.com/cl0b3r/lsdap/refs/heads/main/bins/new-lsdap.sh" -O "/etc/lsdap/bins/new-lsdap.sh" 2>/dev/null
+            wget "https://raw.githubusercontent.com/cl0b3r/lsdap/refs/heads/main/bins/del-ldap.sh" -O "/etc/lsdap/bins/del-ldap.sh" 2>/dev/null
+            wget "https://raw.githubusercontent.com/cl0b3r/lsdap/refs/heads/main/bins/uninstall.sh" -O "/etc/lsdap/bins/uninstall-lsdap.sh" 2>/dev/null
+            wget "https://raw.githubusercontent.com/cl0b3r/lsdap/refs/heads/main/bins/lsdap.sh" -O "/etc/lsdap/bins/lsdap.sh" 2>/dev/null
 
-            wget "https://raw.githubusercontent.com/cl0b3r/lsdap.sh/refs/heads/main/bins/uninstall.sh" -O "/etc/lsdap/bins/uninstall-lsdap.sh" 2>/dev/null
+
             ln -s /etc/lsdap/bins/pablo.sh /usr/bin/lsdget
             ln -s /etc/lsdap/bins/new-lsdap.sh /usr/bin/lsdnew
             ln -s /etc/lsdap/bins/uninstall-lsdap.sh /usr/bin/lsduninstall
             ln -s /etc/lsdap/bins/del-ldap.sh /usr/bin/lsddel
-            
+            ln -s /etc/lsdap/bins/lsdap.sh /usr/bin/lsdap
+
             chmod 755 /etc/lsdap/*
             chmod 755 /etc/lsdap/bins/*
             chmod 700 /etc/lsdap/data.conf

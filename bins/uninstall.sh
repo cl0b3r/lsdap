@@ -12,8 +12,10 @@
 		if [ "$confirmation" = "Y" ] || [ "$confirmation" = "y" ]; then
 			rm -r /etc/lsdap
 			rm /usr/bin/lsdnew
-			rm /usr/bin/lsdget			
+			rm /usr/bin/lsdget
 			rm /usr/bin/lsduninstall
+			rm /usr/bin/lsddel
+
 		echo "Unistalled"
 		else 
 			echo "[#] ABORTING [#]"
