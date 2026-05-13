@@ -95,7 +95,6 @@ ${endcolor}\n"
             echo "127.0.1.1 $hostname" >> /etc/hosts
             echo "$serverip $serverfqdn $servername" >> /etc/hosts
 
-            echo "[+] Installing LDAP Client packages and configuring the system to work with LDAP Server. Please wait..."
             sudo apt install libpam-ldap libnss-ldap nss-updatedb libnss-db nscd ldap-utils -y  1>/dev/null 2>/dev/null
             sed -i '72s/^#//' /etc/ldap.conf
             sed -i '72s/hard/soft/' /etc/ldap.conf
