@@ -1,11 +1,14 @@
-# lsdap.sh
-lsdap.sh is a set of programs used to manage a ldap domain.
-Before use this script you must have a ldap domain installed.
 
-To run this script you only must execute the nexts commands.
-```c
-wget "https://raw.githubusercontent.com/cl0b3r/lsdap/refs/heads/main/set-up.sh"
+# lsdap
+
+lsdap is a set of programs used to manage an LDAP domain.
+Before using this script, you must have an LDAP domain installed.
+
+To run this script, you only have to clone the repo, add execution permissions, and execute it as a shell file.
+
+```bash
+git clone https://github.com/cl0b3r/lsdap.git
+cd lsdap
 chmod +x set-up.sh
-sudo ./set-up.sh
+sudo ./set-up.sh 
 ```
-Now just follow the steps provided within the script.

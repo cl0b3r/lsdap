@@ -8,7 +8,7 @@ echo "[Name]                        [GID]"
 
 for i in $groups
 do
-    gid=$(ldapsearch -xLLL -b "dc=midominio11,dc=local" cn=$i gidNumber | grep gidNumber: | awk '{print $2}')
+    gid=$(ldapsearch -xLLL -b "dc=$dc1,dc=$dc2" cn=$i gidNumber | grep gidNumber: | awk '{print $2}')
     # Usamos printf para formatear la salida
     printf "%-29s %s\n" "$i" "$gid"
 done

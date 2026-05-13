@@ -131,7 +131,7 @@ function creaUSR() {
         exit 2
     else
         lsdget -o
-        read -p "¿Name of the OU you want to put $1 into, if theres no higher ou just press enter --> " opcion
+        read -p "¿Name of the OU you want to put $1 into, if there is no higher ou just press enter --> " opcion
         if [ "$opcion" = "" ]; then
             ruta=$dominio
         else

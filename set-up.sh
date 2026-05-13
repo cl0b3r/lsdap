@@ -94,7 +94,9 @@ ${endcolor}\n"
             echo "127.0.0.1 localhost" >> /etc/hosts
             echo "127.0.1.1 $hostname" >> /etc/hosts
             echo "$serverip $serverfqdn $servername" >> /etc/hosts
-            sudo apt install libpam-ldap libnss-ldap nss-updatedb libnss-db nscd ldap-utils -y 
+
+            echo "[+] Installing LDAP Client packages and configuring the system to work with LDAP Server. Please wait..."
+            sudo apt install libpam-ldap libnss-ldap nss-updatedb libnss-db nscd ldap-utils -y  1>/dev/null 2>/dev/null
             sed -i '72s/^#//' /etc/ldap.conf
             sed -i '72s/hard/soft/' /etc/ldap.conf
             sed -i '129s/md5/crypt/' /etc/ldap.conf
@@ -151,23 +153,23 @@ ${endcolor}\n"
 
 
             mkdir -p /etc/lsdap/bins
+
             touch /etc/lsdap/file.ldif
             touch /etc/lsdap/data.conf
-            wget "https://raw.githubusercontent.com/cl0b3r/lsdap/refs/heads/main/bins/ou.sh" -O "/etc/lsdap/bins/ou.sh" 2>/dev/null
-            wget "https://raw.githubusercontent.com/cl0b3r/lsdap/refs/heads/main/bins/grp.sh" -O "/etc/lsdap/bins/grp.sh" 2>/dev/null
-            wget "https://raw.githubusercontent.com/cl0b3r/lsdap/refs/heads/main/bins/pablo.sh" -O "/etc/lsdap/bins/pablo.sh" 2>/dev/null
-            wget "https://raw.githubusercontent.com/cl0b3r/lsdap/refs/heads/main/bins/usr.sh" -O "/etc/lsdap/bins/usr.sh" 2>/dev/null
-            wget "https://raw.githubusercontent.com/cl0b3r/lsdap/refs/heads/main/bins/new-lsdap.sh" -O "/etc/lsdap/bins/new-lsdap.sh" 2>/dev/null
-            wget "https://raw.githubusercontent.com/cl0b3r/lsdap/refs/heads/main/bins/del-ldap.sh" -O "/etc/lsdap/bins/del-ldap.sh" 2>/dev/null
-            wget "https://raw.githubusercontent.com/cl0b3r/lsdap/refs/heads/main/bins/uninstall.sh" -O "/etc/lsdap/bins/uninstall-lsdap.sh" 2>/dev/null
-            wget "https://raw.githubusercontent.com/cl0b3r/lsdap/refs/heads/main/bins/lsdap.sh" -O "/etc/lsdap/bins/lsdap.sh" 2>/dev/null
 
+            cp ./bins/ou.sh /etc/lsdap/bins/ou.sh
+            cp ./bins/grp.sh /etc/lsdap/bins/grp.sh 
+            cp ./bins/pablo.sh /etc/lsdap/bins/pablo.sh
+            cp ./bins/usr.sh /etc/lsdap/bins/usr.sh
+            cp ./bins/new-lsdap.sh /etc/lsdap/bins/new-lsdap.sh
+            cp ./bins/del-ldap.sh /etc/lsdap/bins/del-ldap.sh
+            cp ./bins/uninstall.sh /etc/lsdap/bins/uninstall-lsdap.sh
 
             ln -s /etc/lsdap/bins/pablo.sh /usr/bin/lsdget
             ln -s /etc/lsdap/bins/new-lsdap.sh /usr/bin/lsdnew
             ln -s /etc/lsdap/bins/uninstall-lsdap.sh /usr/bin/lsduninstall
             ln -s /etc/lsdap/bins/del-ldap.sh /usr/bin/lsddel
-            ln -s /etc/lsdap/bins/lsdap.sh /usr/bin/lsdap
+
 
             chmod 755 /etc/lsdap/*
             chmod 755 /etc/lsdap/bins/*
@@ -177,8 +179,10 @@ ${endcolor}\n"
             echo "lastuid=5000" >> /etc/lsdap/data.conf
             echo "lastgid=5000" >> /etc/lsdap/data.conf
             echo "lsdappassword=$ldappassword" >> /etc/lsdap/data.conf
-            rm ./set-up.sh
+
+
         else
             echo "Wrong option. Aborting."
         fi
     fi
+
