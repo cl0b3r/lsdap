@@ -1,4 +1,4 @@
-#/bin/bash
+#!/bin/bash
 clear
 #si el usuario no es root, muestra un error y sale con 2
 if [ $(id -u) -ne 0 ]
@@ -31,9 +31,8 @@ then
 		else
 			echo "Va a la OU $unidad y todo su contenido, ¿desea continuar (Y/N)?"
 			read opcion
-			if [ "$opcion" == "Y" -o "$opcion" == "y" ]
-			then
-				ldapdelete -x -W -r -D $admin $unidad
+			if [[ "$opcion" == "Y" || "$opcion" == "y" ]]; then
+				ldapdelete -x -W -r -D "$admin" "$unidad"
 				echo "$unidad borrado"
 			fi
 		fi
@@ -51,8 +50,7 @@ then
 	else
 		echo "Va a borrar $objeto, ¿desea continuar (Y/N)?"
 		read opcion
-		if [ "$opcion" == "Y" -o "$opcion" == "y" ]
-		then
+		if [[ "$opcion" == "Y" || "$opcion" == "y" ]]; then
 			esGrupo=$(ldapsearch -xLLL -b $dominio "(&(objectClass=posixGroup)(cn=$1))" | grep "^gidNumber: " | sed 's/gidNumber: //g')
 			if [ "$esGrupo" != "" ]
 			then	
