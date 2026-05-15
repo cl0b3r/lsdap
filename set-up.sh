@@ -156,18 +156,22 @@ ${endcolor}\n"
             touch /etc/lsdap/file.ldif
             touch /etc/lsdap/data.conf
 
+
+            cp ./bins/lsdap.sh /etc/lsdap/bins/lsdap.sh
+
             cp ./bins/ou.sh /etc/lsdap/bins/ou.sh
             cp ./bins/grp.sh /etc/lsdap/bins/grp.sh 
-            cp ./bins/pablo.sh /etc/lsdap/bins/pablo.sh
+            cp ./bins/lsdapget.sh /etc/lsdap/bins/lsdapget.sh
             cp ./bins/usr.sh /etc/lsdap/bins/usr.sh
-            cp ./bins/new-lsdap.sh /etc/lsdap/bins/new-lsdap.sh
-            cp ./bins/del-ldap.sh /etc/lsdap/bins/del-ldap.sh
-            cp ./bins/uninstall.sh /etc/lsdap/bins/uninstall-lsdap.sh
+            cp ./bins/bins/lsdapnew.sh /etc/lsdap/bins/bins/lsdapnew.sh
+            cp ./bins/bins/lsdapdel.sh /etc/lsdap/bins/bins/lsdapdel.sh
+            cp ./bins/bins/lsdapuninstall.sh /etc/lsdap/bins/bins/lsdapuninstall.sh
 
-            ln -s /etc/lsdap/bins/pablo.sh /usr/bin/lsdget
-            ln -s /etc/lsdap/bins/new-lsdap.sh /usr/bin/lsdnew
-            ln -s /etc/lsdap/bins/uninstall-lsdap.sh /usr/bin/lsduninstall
-            ln -s /etc/lsdap/bins/del-ldap.sh /usr/bin/lsddel
+            ln -s /etc/lsdap/bins/lsdapget.sh /usr/bin/lsdget
+            ln -s /etc/lsdap/bins/bins/lsdapnew.sh /usr/bin/lsdnew
+            ln -s /etc/lsdap/bins/bins/lsdapuninstall.sh /usr/bin/lsduninstall
+            ln -s /etc/lsdap/bins/bins/lsdapdel.sh /usr/bin/lsddel
+            ln -s /etc/lsdap/bins/bins/lsdap.sh /usr/bin/lsdap
 
 
             chmod 755 /etc/lsdap/*

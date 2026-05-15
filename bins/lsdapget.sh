@@ -1,21 +1,29 @@
 #!/bin/bash
-
+# VARS
+    lsdapdir="/etc/lsdap"
+    lsdapbins="$lsdapdir/bins"
+    lsdapdata="$lsdapdir/data.conf"
+    lsdapfile="$lsdapdir/file.ldif"
+	
 #si el usuario no es root, muestra un error y sale con 2
 if [ $(id -u) -ne 0 ]
 then
 	echo "get-ldap: Permission denied."
 	exit 2
 fi
+
+
 if [ "$1" = "-g" ]; then
-	sh /etc/lsdap/bins/grp.sh
+	sh $lsdapbins/grp.sh
 	exit 2
 elif [ "$1" = "-u" ]; then
-	sh /etc/lsdap/bins/usr.sh
+	sh $lsdapbins/usr.sh
 	exit 2
 elif [ "$1" = "-o" ]; then
-	bash /etc/lsdap/bins/ou.sh
+	bash $lsdapbins/ou.sh
 	exit 2
 fi
+
 #función que añade espacios sin saltar de línea
 #se usa para 'tabular' los objetos que se van mostrando por pantalla, con el fin de mostrar la lista de forma más clara
 #$1 número de espacios que queremos añadir a la línea
@@ -51,8 +59,7 @@ function getUsuarios()
 }
 
 #busca y obtiene los grupos de una OU (en ese nivel), pasando el dn de la misma
-function getGrupos()
-{
+function getGrupos() {
 	#GRUPOS
 	#exactamente igual que los usuarios pero con grupos
 	grupos=$(ldapsearch -xLLL -s one -b "$1" objectClass=posixGroup cn | grep "^cn: " | sed 's/cn: //g')
@@ -67,14 +74,13 @@ function getGrupos()
 }
 
 #busca y obtiene las sub OU de una OU (en ese nivel), pasando el dn de la misma
-function getUnidades()
-{
+function getUnidades() {
 	#SUB UNIDADES ORGANIZATIVAS (ou dentro de ou)
 	#obtengo el nombre de todas las ou dentro de la que estamos tratando, excepto a sí misma
     subUnidades=$(ldapsearch -xLLL -b "$1" -s one objectClass=organizationalUnit ou | grep "^ou: " | sed 's/ou: //g' | grep -v "^$1$")
 	#si la variable subUnidades es cadena vacía, quiere decir que no tiene subUnidades dentro, en caso contrario si tiene
-    if [ "$subUnidades" != "" ]
-    then
+	if [ "$subUnidades" != "" ]
+	then
 		#recorro la lista contenida en subUnidades con la variable de control subUnidad
 		for subUnidad in $subUnidades
 		do
@@ -87,8 +93,7 @@ function getUnidades()
 
 
 #función que recibe el nombre de una ou y muestra en forma de lista los objetos almacenados en ella
-function getLdap()
-{
+function getLdap() {
 	#obtengo el dn completo de esa unidad para buscar dentro de ella y no en todo el árbol LDAP
 	dnUnidad=$(slapcat | grep "^dn: ou=$1" | sed 's/dn: //g')
 	#$3 es el $1 del script, recibe -o, -g o -u. Si no se recibe, muestra todo
@@ -104,7 +109,6 @@ function getLdap()
 
 		#SUB UNIDADES ORGANIZATIVAS, llamada a la función getUnidades
 		getUnidades $dnUnidad $2 $3
-	#si recibe -u, muestra los usuarios de las unidades de forma recursiva
 	elif [ "$3" = "-u" ]
 	then
 		#añado espacios con el valor de $2, llamando a la función formatoEsp y, seguido, muestro el nombre de la unidad ($1)
@@ -138,9 +142,8 @@ function getLdap()
 
 #MAIN
 clear
-if [ $# -gt 1 ]
-then
-	echo "get-ldap: Numbers of params incorrect."
+if [ $# -gt 1 ]; then
+	echo "Numbers of params incorrect."
 	exit 2
 else
 	#obtengo el nombre del dominio con las lineas de slapcat que empiezan por dn: dc=
@@ -177,4 +180,3 @@ else
 	done
 	echo "--------------------------------------------"
 fi
-

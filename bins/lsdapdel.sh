@@ -21,7 +21,7 @@ admin="cn=admin,$dominio"
 
 if [ $# -eq 2 ]
 then
-	if [ "$1" = "-o" ]
+	if [ "$1" = "-ou" ]
 	then
 		unidad=$(slapcat | grep "^dn: ou=$2," | sed 's/dn: //g')
 		if [ "$unidad" = "" ]

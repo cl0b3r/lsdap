@@ -192,7 +192,7 @@ dominio=$(slapcat | grep "^dn: dc=" | grep -v "nodomain" | sed 's/dn: //g')
 admin="cn=admin,$dominio"
 
 if [ $# -eq 2 ]; then
-    if [ "$1" = "-o" ]; then
+    if [ "$1" = "-ou" ]; then
         creaOU $2
     elif [ "$1" == "-g" ]; then
         creaGRP $2
