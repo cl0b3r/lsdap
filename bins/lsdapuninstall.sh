@@ -1,22 +1,14 @@
 #!/bin/bash
-# ROOT CHECK
-    whoami=$(whoami)
-    if [ "$whoami" != "root" ]; then
-        echo "[!] YOU MUST RUN THIS SCRIPT LIKE ROOT. [!]"
-        echo ""
-        exit
-    fi
-	echo ""
+# VARS
+    lsdapdir="/etc/lsdap"
+
 	echo "[!] You are one step to uninstall lsdap [!]" 
+	echo""
 	read -p "Are you sure?(Y/N) --> " confirmation
 		if [ "$confirmation" = "Y" ] || [ "$confirmation" = "y" ]; then
-			rm -r /etc/lsdap
-			rm /usr/bin/lsdnew
-			rm /usr/bin/lsdget
-			rm /usr/bin/lsduninstall
-			rm /usr/bin/lsddel
-
-		echo "Unistalled"
+			rm -r $lsdapdir
+			rm /usr/bin/lsdap
+		echo "Uninstalled"
 		else 
 			echo "[#] ABORTING [#]"
         fi

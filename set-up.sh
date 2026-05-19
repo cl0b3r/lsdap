@@ -19,6 +19,13 @@
     turquoiseColour="\e[0;36m\033[1m"
     grayColour="\e[0;37m\033[1m"
 #---------------------------------------
+# VARS
+    lsdapdir="/etc/lsdap"
+    localbins="./bins"
+    lsdapbins="$lsdapdir/bins"
+    lsdapdata="$lsdapdir/data.conf"
+    lsdapfile="$lsdapdir/file.ldif"
+#---------------------------------------
 
 # Read password with "*" instead of showing the characters
 read_password() {
@@ -151,37 +158,33 @@ ${endcolor}\n"
             done
 
 
-            mkdir -p /etc/lsdap/bins
+            mkdir -p $lsdapbins
 
-            touch /etc/lsdap/file.ldif
-            touch /etc/lsdap/data.conf
-
-
-            cp ./bins/lsdap.sh /etc/lsdap/bins/lsdap.sh
-
-            cp ./bins/ou.sh /etc/lsdap/bins/ou.sh
-            cp ./bins/grp.sh /etc/lsdap/bins/grp.sh 
-            cp ./bins/lsdapget.sh /etc/lsdap/bins/lsdapget.sh
-            cp ./bins/usr.sh /etc/lsdap/bins/usr.sh
-            cp ./bins/lsdapnew.sh /etc/lsdap/bins/lsdapnew.sh
-            cp ./bins/lsdapdel.sh /etc/lsdap/bins/lsdapdel.sh
-            cp ./bins/lsdapuninstall.sh /etc/lsdap/bins/lsdapuninstall.sh
-
-            ln -s /etc/lsdap/bins/lsdapget.sh /usr/bin/lsdget
-            ln -s /etc/lsdap//bins/lsdapnew.sh /usr/bin/lsdnew
-            ln -s /etc/lsdap/bins/lsdapuninstall.sh /usr/bin/lsduninstall
-            ln -s /etc/lsdap/bins/bins/lsdapdel.sh /usr/bin/lsddel
-            ln -s /etc/lsdap/bins/lsdap.sh /usr/bin/lsdap
+            touch $lsdapdir/file.ldif
+            touch $lsdapdata
 
 
-            chmod 755 /etc/lsdap/*
-            chmod 755 /etc/lsdap/bins/*
-            chmod 700 /etc/lsdap/data.conf
+            cp ./bins/lsdap.sh $lsdapbins/lsdap.sh
 
-            echo "fqdn=$fqdn" >> /etc/lsdap/data.conf
-            echo "lastuid=5000" >> /etc/lsdap/data.conf
-            echo "lastgid=5000" >> /etc/lsdap/data.conf
-            echo "lsdappassword=$ldappassword" >> /etc/lsdap/data.conf
+            cp $localbins/ou.sh $lsdapbins/ou.sh
+            cp $localbins/grp.sh $lsdapbins/grp.sh 
+            cp $localbins/lsdapget.sh $lsdapbins/lsdapget.sh
+            cp $localbins/usr.sh $lsdapbins/usr.sh
+            cp $localbins/lsdapnew.sh $lsdapbins/lsdapnew.sh
+            cp $localbins/lsdapdel.sh $lsdapbins/lsdapdel.sh
+            cp $localbins/lsdapuninstall.sh $lsdapbins/lsdapuninstall.sh
+
+            ln -s $lsdapbins/lsdap.sh /usr/bin/lsdap
+
+
+            chmod 755 $lsdapdir/*
+            chmod 755 $lsdapbins/*
+            chmod 700 $lsdapdata
+
+            echo "fqdn=$fqdn" >> $lsdapdata
+            echo "lastuid=5000" >> $lsdapdata
+            echo "lastgid=5000" >> $lsdapdata
+            echo "lsdappassword=$ldappassword" >> $lsdapdata
 
 
         else

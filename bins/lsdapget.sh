@@ -5,21 +5,15 @@
     lsdapdata="$lsdapdir/data.conf"
     lsdapfile="$lsdapdir/file.ldif"
 	
-#si el usuario no es root, muestra un error y sale con 2
-if [ $(id -u) -ne 0 ]
-then
-	echo "get-ldap: Permission denied."
-	exit 2
-fi
 
-
-if [ "$1" = "-g" ]; then
-	sh $lsdapbins/grp.sh
+# Opción a seleccionar
+if [ "$1" = "group" ]; then
+	bash $lsdapbins/grp.sh
 	exit 2
-elif [ "$1" = "-u" ]; then
-	sh $lsdapbins/usr.sh
+elif [ "$1" = "user" ]; then
+	bash $lsdapbins/usr.sh
 	exit 2
-elif [ "$1" = "-o" ]; then
+elif [ "$1" = "ou" ]; then
 	bash $lsdapbins/ou.sh
 	exit 2
 fi
@@ -140,22 +134,18 @@ function getLdap() {
 	fi
 }
 
-#MAIN
-clear
-if [ $# -gt 1 ]; then
-	echo "Numbers of params incorrect."
+#Main command execution
+if [ "$1" != "group" ] && [ "$1" != "user" ] && [ "$1" != "ou" ] && [ "$1" != "" ]; then
+	echo "Object '$1' not valid. Object should be 'ou', 'group' or 'user'. Use -h for help."
 	exit 2
 else
 	#obtengo el nombre del dominio con las lineas de slapcat que empiezan por dn: dc=
 	#emtubo para invertir la búsqueda y que no aparezca nodomain por si acaso
 	dominio=$(slapcat | grep "^dn: dc=" | grep -v "nodomain" | sed 's/dn: //g')
-	echo "--------------------------------------------"
-	echo $dominio
-	echo "--------------------------------------------"
-
 	#obtengo todas las unidades organizativas del dominio, formateándolas con grep y sed para quedarme con el dn limpio
 	unidades=$(ldapsearch -xLLL -b "$dominio" objectClass=organizationalUnit ou -s one | grep "^ou: " | sed 's/ou: //g')
-	
+	echo ""
+	echo "Domain: $(slapcat | grep "^dn: dc=" | grep -v "nodomain" | sed 's/dn: //g' | awk -F "=" '{print $2}' | awk -F "," '{print $1}').$(slapcat | grep "^dn: dc=" | grep -v "nodomain" | sed 's/dn: //g' | awk -F "=" '{print $3}' | awk -F "," '{print $1}')"
 	#para incluir en la búsqueda grupos y usuarios que se encuentran en el directorio raiz
 	grupos=$(ldapsearch -xLLL -s one -b "$dominio" objectClass=posixGroup | grep "^cn: " | sed 's/cn: //g')
 	
@@ -178,5 +168,5 @@ else
 	do
 		getLdap $unidad 1 $1 #$1 es la opción con la que se ejecuta el script -u, -g o -o
 	done
-	echo "--------------------------------------------"
+	echo ""
 fi
