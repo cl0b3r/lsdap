@@ -8,6 +8,10 @@
     fi
 #-------------------------------------------------------
 
+if [ -d "/usr/local/share/lsdap" ]; then
+    echo "LSDAP is already installed. If you need help run lsdap -h."
+    exit
+fi
 
 # COLORS
     greenColour="\e[0;32m\033[1m"
@@ -173,13 +177,15 @@ ${endcolor}\n"
             chmod 755 $lsdapdir/*
             chmod 755 $lsdapbins/*
             chmod 700 $lsdapdata
+            chmod 755 update.sh
 
             echo "fqdn=$fqdn" >> $lsdapdata
             echo "lastuid=5000" >> $lsdapdata
             echo "lastgid=5000" >> $lsdapdata
             echo "lsdappassword=$ldappassword" >> $lsdapdata
 
-
+            echo "Installed. Run lsdap -h as root for more info."
+            echo "Repository link if you need more information: https://github.com/cl0b3r/lsdap"
         else
             echo "Wrong option. Aborting."
         fi
