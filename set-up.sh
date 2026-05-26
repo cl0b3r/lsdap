@@ -183,7 +183,7 @@ ${endcolor}\n"
             echo "lastuid=5000" >> $lsdapdata
             echo "lastgid=5000" >> $lsdapdata
             echo "lsdappassword=$ldappassword" >> $lsdapdata
-
+            echo ""
             echo "Installed. Run lsdap -h as root for more info."
             echo "Repository link if you need more information: https://github.com/cl0b3r/lsdap"
         else
