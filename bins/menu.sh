@@ -56,7 +56,6 @@ menu() {
     (md) --> Modify an object
     (mv) --> Move an object
 
-    (r) --> Reconfigure script.
     (e) --> Exit.
 
     [$dc1.$dc2]
@@ -68,69 +67,12 @@ menu() {
             read -p "[#] Name of the user you want to create --> " username
             lsdap -new user $username
             read -p "Press enter to continue" x
-            
+
             
         elif [ "$option" = "o" ] || [ "$option" = "O" ];then
-            echo ""
-            read -p "[#] The OU you want to create is inside another OU? (Y/N) --> " ins
-            
-            if [ "$ins" = "Y" ] || [ "$ins" = "y" ]; then
-                ./lsdap/ou.sh
-                read -p "[#] Name of the higher OU --> " hiow
-                hiow=",ou=$hiow"
-            fi
-            read -p "[#] Organizational Unit name --> " newouname
-            echo "dn: ou=$newouname$hiow,dc=$dc1,dc=$dc2" > ./lsdap/file.ldif
-            echo "ou: $newouname" >> ./lsdap/file.ldif
-            echo "objectClass: organizationalunit" >> ./lsdap/file.ldif
-            ldapadd -x -D cn=admin,dc=$dc1,dc=$dc2 -W -f ./lsdap/file.ldif
-            echo ""
-            echo "COMMAND --> ldapadd -x -D cn=admin,dc=$dc1,dc=$dc2 -W -f ./lsdap/file.ldif"
-            echo "[#] ou=$newouname$hiow,dc=$dc1,dc=$dc2 has been created [#]"
-            echo "" 
+            read -p "[#] Name of the OU you want to create --> " ou
+            lsdap -new ou $ou
             read -p "Press enter to continue" x
-        elif [ "$option" = "g" ] || [ "$option" = "G" ];then
-            
-            read -p "[#] Name of the new Group --> " groupname
-            groupgid=$(cat ./lsdap/data.conf | grep "lastgid" | awk -F'=' '{print $2}')
-            echo "[#] GID of the new Group --> " $groupgid
-            read -p "[#] The Group you want to create is inside into any OU? (N/1/2) --> " ins
-
-            if [ "$ins" = "1" ]; then
-                ./lsdap/ou.sh
-                read -p "[#] Name of the OU you want to put the group into --> " ou1
-                ou1=",ou=$ou1"
-            elif [ "$ins" = "2" ]; then
-                ./lsdap/ou.sh
-                read -p "[#] Name of the first OU you want to put the group into --> " ou1
-                read -p "[#] Name of the second OU you want to put the group into --> " ou2
-                ou1=",ou=$ou1"
-                ou2=",ou=$ou2"
-
-            fi
-
-            echo "dn: cn=$groupname$ou2$ou1,dc=$dc1,dc=$dc2" > ./lsdap/file.ldif
-            echo "objectClass: posixGroup" >> ./lsdap/file.ldif
-            echo "cn: $groupname" >> ./lsdap/file.ldif
-            echo "gidNumber: $groupgid" >> ./lsdap/file.ldif
-            ldapadd -x -D cn=admin,dc=$dc1,dc=$dc2 -W -f ./lsdap/file.ldif
-            
-            comprobarcreaciongrupo=$(slapcat | grep cn=$groupname | awk -F'=' '{print $2}' | sed  "s/ //g" | awk -F',' '{print $1}')
-
-            if [ "$comprobarcreaciongrupo" != "$groupname" ]; then
-                echo "[!] Something was wrong, probaly the name you introduced has unsoported letters or the name group exist."
-                read -p "Press enter to continue" x
-            else
-                newgroupgid=$(($groupgid + 1))
-                sed -i "s/$groupgid/$newgroupgid/g" ./lsdap/data.conf
-                echo ""
-                echo "COMMAND --> ldapadd -x -D cn=admin,dc=$dc1,dc=$dc2 -W -f ./lsdap/file.ldif"
-                echo "[#] cn=$groupname$ou2$ou1,dc=$dc1,dc=$dc2 has been created [#]"
-                groupadd -g $groupgid $groupname
-                echo "" 
-                read -p "Press enter to continue" x
-            fi
-
         elif [ "$option" = "s" ] || [ "$option" = "S" ];then
             echo ""
             until [ "$searchoption" = "e" ]; do 
@@ -145,7 +87,7 @@ menu() {
                 echo ""
 
                 if [ "$searchoption" = "1" ]; then
-                    ./lsdap/pablo.sh
+                    lsdap -ls 
                     read -p "Press enter to continue" x
                     clear
                 elif [ "$searchoption" = "2" ]; then
@@ -160,17 +102,17 @@ menu() {
                         echo ""
                         clear
                         if [ "$specificsearch" = "1" ]; then
-                        ./lsdap/ou.sh
+                        lsdap -ls ou
                         echo ""
                         read -p "Pres enter to continue" x
                         clear
                         elif [ "$specificsearch" = "2" ]; then
-                        ./lsdap/usr.sh
+                        lsdap -ls user
                         echo ""
                         read -p "Pres enter to continue" x
                         clear
                         elif [ "$specificsearch" = "3" ]; then
-                        ./lsdap/grp.sh
+                        lsdap -ls group
                         echo ""
                         read -p "Pres enter to continue" x
                         clear
@@ -181,37 +123,7 @@ menu() {
 
             done
             
-        elif [ "$option" = "r" ] || [ "$option" = "R" ];then
-            # RECONFIGURE
-            until [ "$reconfigureoption" = "e" ] || [ "$reconfigureoption" = "E" ]; do
-                clear
-                echo -n "[-   What do you want to reconfigure?   -]
-            "
-                echo ""
-                echo "  (1) - Change FQDN ($fqdn)."  
-                #echo "  (2) - "
-                echo "  (e) - Go Back."
-                echo " "
-                read -p "[#] Choose your option --> " reconfigureoption
-                fqdn=$(cat ./lsdap/data.conf | grep "fqdn" | awk -F '=' '{print $2}')
 
-                if [ "$reconfigureoption" = "1" ]; then
-                    fqdn=$(cat ./lsdap/data.conf | grep "fqdn" | awk -F '=' '{print $2}')
-                    echo " "
-                    read -p "- NEW FQDN (server.domain.topleveldomain) --> " newfqdn
-                    fqdn3oct=$(echo $newfqdn | awk -F'.' '{print $3}')
-
-                    while [ "$fqdn3oct" = "" ]; do
-                        echo "[!] WRONG FORMAT, TRY AGAIN"
-                        read -p "- NEW FQDN (server.domain.topleveldomain) --> " newfqdn
-                        echo ""
-                        fqdn3oct=$(echo $newfqdn | awk -F'.' '{print $3}')
-                    done
-                    echo "[!] Saving new FQDN in config's file"
-                    sed -i "s/$fqdn/$newfqdn/g" ./lsdap/data.conf
-                    fqdn=$newfqdn
-                fi
-            done
         elif [ "$option" = "rm" ] || [ "$option" = "RM" ]; then
             until [ "$deleteoption" = "e" ] || [ "$deleteoption" = "E" ]; do
             ou1=""
@@ -259,7 +171,7 @@ menu() {
                     
                 elif [ "$deleteoption" = "2" ]; then
                     read -p "[#] The user you want to eliminate is inside into any OU? (N/1/2) --> " ins
-                    ./lsdap/pablo.sh
+                    lsdap -ls user
                     if [ "$ins" = "1" ]; then
                         read -p "[#] Name of OU who contain the user you want to elimenate --> " ou1
                         ou1=",ou=$ou1"

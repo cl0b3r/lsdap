@@ -159,7 +159,7 @@ function creaUSR() {
         echo "sn: '$apellidos'" >> $lsdapfile
         echo "userPassword: $contraUsu" >> $lsdapfile
         echo "homeDirectory: /perfiles/$1" >> $lsdapfile
-		lsdget -g > /tmp/lsdget
+		lsdap -ls group > /tmp/lsdget
 		nombregrupo=$(cat /tmp/lsdget | grep "$gidNumber" | awk '{print $1}'| sed 's/\[Name\]//g' | sed 's/ //g')
 		rm /tmp/lsdget
 		cuela=$(echo "useradd -g $gidNumberUsu -u $uidNumber -m -d /perfiles/$1 $1")
