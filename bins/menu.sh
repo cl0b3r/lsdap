@@ -67,6 +67,8 @@ menu() {
         if [ "$option" = "u" ] || [ "$option" = "U" ];then
             read -p "[#] Name of the user you want to create --> " username
             lsdap -new user $username
+            read -p "Press enter to continue" x
+            
             
         elif [ "$option" = "o" ] || [ "$option" = "O" ];then
             echo ""
