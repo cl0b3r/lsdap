@@ -2,7 +2,7 @@
 # Root check
     whoami=$(whoami)
     if [ "$whoami" != "root" ]; then
-        echo "set-up.sh: access denied"
+        echo "This script must be run as root. Please use sudo"
         echo ""
         exit
     fi
@@ -159,19 +159,11 @@ ${endcolor}\n"
 
 
             mkdir -p $lsdapbins
-
-            touch $lsdapdir/file.ldif
+            touch $lsdapfile
             touch $lsdapdata
 
 
-            cp $localbins/lsdap.sh $lsdapbins/lsdap.sh
-            cp $localbins/ou.sh $lsdapbins/ou.sh
-            cp $localbins/grp.sh $lsdapbins/grp.sh 
-            cp $localbins/lsdapget.sh $lsdapbins/lsdapget.sh
-            cp $localbins/usr.sh $lsdapbins/usr.sh
-            cp $localbins/lsdapnew.sh $lsdapbins/lsdapnew.sh
-            cp $localbins/lsdapdel.sh $lsdapbins/lsdapdel.sh
-            cp $localbins/lsdapuninstall.sh $lsdapbins/lsdapuninstall.sh
+            cp -r $localbins/* $lsdapbins/
 
             ln -s $lsdapbins/lsdap.sh /usr/bin/lsdap
             cp lsdap-completion.bash /usr/share/bash-completion/completions/lsdap
@@ -192,4 +184,3 @@ ${endcolor}\n"
             echo "Wrong option. Aborting."
         fi
     fi
-

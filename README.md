@@ -12,3 +12,8 @@ cd lsdap
 chmod +x set-up.sh
 sudo ./set-up.sh 
 ```
+
+Update lsdap is very simple just get into you repository directory and execute the follow command.
+```bash
+sudo ./update.sh
+```
