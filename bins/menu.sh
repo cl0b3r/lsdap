@@ -19,8 +19,8 @@
 #--------------------------------------
 
 # WORK IN PROGRESS
-echo "Work in progress, this menu is not available yet, sorry for the inconvenience."
-exit
+#echo "Work in progress, this menu is not available yet, sorry for the inconvenience."
+#exit
 
 # Menu -----------------------------------------------------------------------------------------------------------------
 menu() {
@@ -65,75 +65,9 @@ menu() {
  [#] Choose your option --> " option
 
         if [ "$option" = "u" ] || [ "$option" = "U" ];then
-            read -p "[#] The User you want to create is inside into any OU? (N/1/2) --> " ins
-
-            if [ "$ins" = "1" ]; then
-                $lsdapbins/ou.sh
-                read -p "[#] Name of the OU you want to put the group into --> " ou1
-                ou1=",ou=$ou1"
-            elif [ "$ins" = "2" ]; then
-                $lsdapbins/ou.sh
-                read -p "[#] Name of the first OU you want to put the group into --> " ou1
-                read -p "[#] Name of the second OU you want to put the group into --> " ou2
-                ou1=",ou=$ou1"
-                ou2=",ou=$ou2"
+            read -p "[#] Name of the user you want to create --> " username
+            lsdap -new user $username
             
-            fi
-
-        
-                read -p "[#] Common Name --> " username
-                read -p "[#] Name --> " givenname 
-                read -p "[#] Surname --> " usersn
-                read -p "[#] Password --> " password
-
-                echo ""
-                ./lsdap/grp.sh
-                echo ""
-                read -p "[#] Group GID you want to put the user into --> " usergrougid
-
-                userid=$(cat ./lsdap/data.conf | grep lastuid | awk -F'=' '{print $2}')
-                echo ""
-
-
-                echo "dn: cn=$username$ou2$ou1,dc=$dc1,dc=$dc2" > ./lsdap/file.ldif
-                echo "objectClass: inetOrgPerson" >> ./lsdap/file.ldif
-                echo "objectClass: posixAccount" >> ./lsdap/file.ldif
-                echo "objectClass: shadowAccount" >> ./lsdap/file.ldif
-                echo "uid: $username" >> ./lsdap/file.ldif
-                echo "sn: $usersn" >> ./lsdap/file.ldif
-                echo "givenName: $givenname" >> ./lsdap/file.ldif
-                echo "cn: $username" >> ./lsdap/file.ldif
-                echo "uidNumber: $userid" >> ./lsdap/file.ldif
-                echo "gidNumber: $usergrougid" >> ./lsdap/file.ldif
-                echo "userPassword: $(slappasswd -s $password)" >> ./lsdap/file.ldif
-                echo "homeDirectory: /home/$username" >> ./lsdap/file.ldif
-
-
-
-
-                sudo ldapadd -x -D cn=admin,dc=$dc1,dc=$dc2 -W -f ./lsdap/file.ldif
-            
-                comprobarcreacionusuario=$(sudo slapcat | grep $username |grep cn: | head -1 | awk '{print $2}')
-
-                if [ "$comprobarcreacionusuario" != "$username" ]; then
-                    echo "[!] Something was wrong, probably the name you introduced has unsupported letters or the user already exists."
-                    read -p "Press enter to continue" x
-                else
-                    userid2=$(($userid + 1))
-                    sed -i "s/$userid/$userid2/g" ./lsdap/data.conf
-                    echo ""
-                    echo "COMMAND --> ldapadd -x -D cn=admin,dc=$dc1,dc=$dc2 -W -f ./lsdap/file.ldif"
-                    echo "[#] cn=$username$ou2$ou1,dc=$dc1,dc=$dc2 has been created [#]"
-                    useradd -u $userid -g $usergrougid $username
-                    echo ""
-                    read -p "Press enter to continue" x
-                fi
-
-
-
-
-
-
         elif [ "$option" = "o" ] || [ "$option" = "O" ];then
             echo ""
             read -p "[#] The OU you want to create is inside another OU? (Y/N) --> " ins
@@ -414,3 +348,5 @@ menu() {
         fi
     done
 }
+
+menu
