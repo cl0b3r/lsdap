@@ -38,7 +38,7 @@ else
     chmod 755 $lsdapbins/*
     chmod 755 update.sh
     chmod 755 set-up.sh
-    chown $(cat /etc/passwd | grep 1000 | awk '{print $1}'):$(cat /etc/passwd | grep 1000 | awk '{print $1}') update.sh
-    chown $(cat /etc/passwd | grep 1000 | awk '{print $1}'):$(cat /etc/passwd | grep 1000 | awk '{print $1}') set-up.sh
+    chown $(cat /etc/passwd | grep 1000 | awk -F ':' '{print $1}'):$(cat /etc/passwd | grep 1000 | awk '{print $1}') update.sh
+    chown $(cat /etc/passwd | grep 1000 | awk -F ':' '{print $1}'):$(cat /etc/passwd | grep 1000 | awk '{print $1}') set-up.sh
 
 fi
