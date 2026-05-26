@@ -1,5 +1,9 @@
 #!/bin/bash
-echo ""
+if [ -z "$(slapcat | grep posixGroup)" ]; then
+	echo "No groups found. You can create objects with lsdap -new, use -h for help."
+	exit 1
+fi
+
 dc1=$(cat /etc/lsdap/data.conf | grep "fqdn" | awk -F '=' '{print $2}' | awk -F '.' '{print $2}')
 dc2=$(cat /etc/lsdap/data.conf | grep "fqdn" | awk -F '=' '{print $2}' | awk -F '.' '{print $3}')
 

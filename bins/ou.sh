@@ -1,4 +1,10 @@
 #!/bin/bash
+
+if [ -z "$(slapcat | grep ou)" ]; then
+	echo "No Organizational Units found. You can create objects with lsdap -new, use -h for help."
+	exit 1
+fi
+
 echo "Available Organizational Units:"
 
 # Función recursiva que recibe el DN de la OU y el nivel de profundid
@@ -42,4 +48,3 @@ done
 
 # Limpiar el archivo temporal de patrones
 [ -f patron ] && rm patron
-echo ""

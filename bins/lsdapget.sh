@@ -15,6 +15,7 @@ elif [ "$1" = "user" ]; then
 	exit 2
 elif [ "$1" = "ou" ]; then
 	bash $lsdapbins/ou.sh
+	echo ""
 	exit 2
 fi
 
@@ -28,7 +29,11 @@ function formatoEsp()
 		echo -n " "
 	done
 }
-
+# Si el arbol LDAP está vacío muestra que no hay nada.
+if [ $(sudo slapcat | wc -l) -eq 14 ]; then
+	echo "LDAP tree is empty. You can add objects with lsdap -new, use -h for help."
+	exit 1
+fi
 #busca y obtiene los usuarios de una OU (en ese nivel), pasando el dn de la misma
 function getUsuarios()
 {

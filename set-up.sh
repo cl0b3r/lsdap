@@ -164,8 +164,7 @@ ${endcolor}\n"
             touch $lsdapdata
 
 
-            cp ./bins/lsdap.sh $lsdapbins/lsdap.sh
-
+            cp $localbins/lsdap.sh $lsdapbins/lsdap.sh
             cp $localbins/ou.sh $lsdapbins/ou.sh
             cp $localbins/grp.sh $lsdapbins/grp.sh 
             cp $localbins/lsdapget.sh $lsdapbins/lsdapget.sh
@@ -175,8 +174,10 @@ ${endcolor}\n"
             cp $localbins/lsdapuninstall.sh $lsdapbins/lsdapuninstall.sh
 
             ln -s $lsdapbins/lsdap.sh /usr/bin/lsdap
-
-
+            cp lsdap-completion.bash /usr/share/bash-completion/completions/lsdap
+            echo "source /usr/share/bash-completion/completions/lsdap/lsdap_completion.sh" >> ~/.bashrc 
+            source ~/.bashrc
+            
             chmod 755 $lsdapdir/*
             chmod 755 $lsdapbins/*
             chmod 700 $lsdapdata

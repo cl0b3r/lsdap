@@ -1,4 +1,8 @@
 #!/bin/bash
+if [ -z "$(sudo slapcat | grep posixAccount)" ]; then
+    echo "No users found. You can create objects with lsdap -new, use -h for help."
+    exit 1
+fi
 echo ""
 dc1=$(cat /etc/lsdap/data.conf | grep "fqdn" | awk -F '=' '{print $2}' | awk -F '.' '{print $2}')
 dc2=$(cat /etc/lsdap/data.conf | grep "fqdn" | awk -F '=' '{print $2}' | awk -F '.' '{print $3}')

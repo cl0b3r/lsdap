@@ -69,4 +69,3 @@ else
 	echo "del-ldap: Need a LdapObject name"
 	exit 2
 fi
-
