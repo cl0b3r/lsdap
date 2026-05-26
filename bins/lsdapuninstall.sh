@@ -9,6 +9,8 @@ if [ "$confirmation" = "Y" ] || [ "$confirmation" = "y" ]; then
 	rm -r $lsdapdir
 	sed -i '\#source /usr/share/bash-completion/completions/lsdap#d' ~/.bashrc
     rm /usr/bin/lsdap
+	cd
+	rm -rf lsdap*
 	echo "Uninstalled"
 else 
 	echo "[#] ABORTING [#]"
