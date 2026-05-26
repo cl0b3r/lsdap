@@ -175,7 +175,7 @@ ${endcolor}\n"
 
             ln -s $lsdapbins/lsdap.sh /usr/bin/lsdap
             cp lsdap-completion.bash /usr/share/bash-completion/completions/lsdap
-            echo "source /usr/share/bash-completion/completions/lsdap/lsdap_completion.sh" >> ~/.bashrc 
+            echo "source /usr/share/bash-completion/completions/lsdap" >> ~/.bashrc 
             source ~/.bashrc
             
             chmod 755 $lsdapdir/*

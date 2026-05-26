@@ -7,10 +7,9 @@
 	read -p "Are you sure?(Y/N) --> " confirmation
 		if [ "$confirmation" = "Y" ] || [ "$confirmation" = "y" ]; then
 			rm -r $lsdapdir
-			rm /usr/bin/lsdap
-			rm -r /usr/share/bash-completion/completions/lsdap
-			sed -i 
-		echo "Uninstalled"
+			sed -i '\#source /usr/share/bash-completion/completions/lsdap#d' ~/.bashrc		
+
+			echo "Uninstalled"
 		else 
 			echo "[#] ABORTING [#]"
         fi
