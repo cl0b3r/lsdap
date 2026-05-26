@@ -21,6 +21,7 @@ if [ "$(git fetch && git status -uno | grep "up to date" | awk '{print $4}')" = 
     exit
 else
     echo "Updating..."
+    git reset --hard origin/$(git branch --show-current)
     git pull
 
     mkdir /tmp/lsdapupdate
@@ -34,5 +35,10 @@ else
     cp -r $localbins/* $lsdapbins/
     cp -r /tmp/lsdapupdate/* $lsdapdir/
     rm -rf /tmp/lsdapupdate
+    chmod 755 $lsdapbins/*
+    chmod 755 update.sh
+    chmod 755 set-up.sh
+    chown $(cat /etc/passwd | grep 1000 | awk '{print $1}'):$(cat /etc/passwd | grep 1000 | awk '{print $1}') update.sh
+    chown $(cat /etc/passwd | grep 1000 | awk '{print $1}'):$(cat /etc/passwd | grep 1000 | awk '{print $1}') set-up.sh
 
 fi
