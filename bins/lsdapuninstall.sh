@@ -10,8 +10,6 @@ if [ "$confirmation" = "Y" ] || [ "$confirmation" = "y" ]; then
 	sed -i '\#source /usr/share/bash-completion/completions/lsdap#d' ~/.bashrc
     rm /usr/bin/lsdap
 	rm /usr/share/bash-completion/completions/lsdap
-    usuario=$(cat /etc/passwd | grep 1000 | awk -F ':' '{print $1}')
-	rm -rf /home/$usuario/lsdap
 	echo "Uninstalled"
 else 
 	echo "[#] ABORTING [#]"
