@@ -1,11 +1,13 @@
 #!/bin/bash
+
 # VARS
-    lsdapdir="/etc/lsdap"
+    lsdapdir="/usr/local/share/lsdap"
+    localbins="./bins"
     lsdapbins="$lsdapdir/bins"
     lsdapdata="$lsdapdir/data.conf"
     lsdapfile="$lsdapdir/file.ldif"
+#--------------------------------------
 	
-
 # Opción a seleccionar
 if [ "$1" = "group" ]; then
 	bash $lsdapbins/grp.sh

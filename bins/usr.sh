@@ -1,11 +1,20 @@
 #!/bin/bash
+
+# VARS
+    lsdapdir="/usr/local/share/lsdap"
+    localbins="./bins"
+    lsdapbins="$lsdapdir/bins"
+    lsdapdata="$lsdapdir/data.conf"
+    lsdapfile="$lsdapdir/file.ldif"
+#--------------------------------------
+
 if [ -z "$(sudo slapcat | grep posixAccount)" ]; then
     echo "No users found. You can create objects with lsdap -new, use -h for help."
     exit 1
 fi
 echo ""
-dc1=$(cat /etc/lsdap/data.conf | grep "fqdn" | awk -F '=' '{print $2}' | awk -F '.' '{print $2}')
-dc2=$(cat /etc/lsdap/data.conf | grep "fqdn" | awk -F '=' '{print $2}' | awk -F '.' '{print $3}')
+dc1=$(cat $lsdapdata | grep "fqdn" | awk -F '=' '{print $2}' | awk -F '.' '{print $2}')
+dc2=$(cat $lsdapdata | grep "fqdn" | awk -F '=' '{print $2}' | awk -F '.' '{print $3}')
 
 users=$(ldapsearch -xLLL -b "dc=$dc1,dc=$dc2" objectClass=posixAccount | grep cn: | awk '{print $2}')
 echo "[Name]                        [UID]"

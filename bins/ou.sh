@@ -1,5 +1,6 @@
 #!/bin/bash
 
+
 if [ -z "$(slapcat | grep ou)" ]; then
 	echo "No Organizational Units found. You can create objects with lsdap -new, use -h for help."
 	exit 1

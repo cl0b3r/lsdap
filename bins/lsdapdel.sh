@@ -1,5 +1,9 @@
 #!/bin/bash
-clear
+
+# WORK IN PROGRESS
+echo "Work in progress, this menu is not available yet, sorry for the inconvenience."
+exit
+
 #si el usuario no es root, muestra un error y sale con 2
 if [ $(id -u) -ne 0 ]
 then

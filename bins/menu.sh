@@ -11,11 +11,12 @@
 #---------------------------------------
 
 # VARS
-    lsdapdir="/etc/lsdap"
+    lsdapdir="/usr/local/share/lsdap"
+    localbins="./bins"
     lsdapbins="$lsdapdir/bins"
     lsdapdata="$lsdapdir/data.conf"
     lsdapfile="$lsdapdir/file.ldif"
-
+#--------------------------------------
 
 # WORK IN PROGRESS
 echo "Work in progress, this menu is not available yet, sorry for the inconvenience."
@@ -413,4 +414,3 @@ menu() {
         fi
     done
 }
-

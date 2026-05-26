@@ -1,5 +1,13 @@
 #!/bin/bash
 
+# VARS
+    lsdapdir="/usr/local/share/lsdap"
+    localbins="./bins"
+    lsdapbins="$lsdapdir/bins"
+    lsdapdata="$lsdapdir/data.conf"
+    lsdapfile="$lsdapdir/file.ldif"
+#--------------------------------------
+
 # Si hay más de dos parámetros, mostrar mensaje de error y salir.
 if [ $# -ne 2 ]; then
     echo "invalid parameters. Use -h for help."
@@ -37,11 +45,6 @@ read_password() {
 }
 #--------------------------
 
-#VARS
-lsdapdir="/etc/lsdap"
-lsdapbins="$lsdapdir/bins"
-lsdapdata="$lsdapdir/data.conf"
-lsdapfile="$lsdapdir/file.ldif"
 
 ldappassword=$(cat $lsdapdata | grep "lsdappassword" | awk -F'=' '{print $2}')
 

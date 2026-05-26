@@ -20,7 +20,7 @@
     grayColour="\e[0;37m\033[1m"
 #---------------------------------------
 # VARS
-    lsdapdir="/etc/lsdap"
+    lsdapdir="/usr/local/share/lsdap"
     localbins="./bins"
     lsdapbins="$lsdapdir/bins"
     lsdapdata="$lsdapdir/data.conf"
