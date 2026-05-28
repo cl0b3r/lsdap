@@ -6,6 +6,9 @@
     lsdapbins="$lsdapdir/bins"
     lsdapdata="$lsdapdir/data.conf"
     lsdapfile="$lsdapdir/file.ldif"
+
+    ldappassword=$(cat $lsdapdata | grep "lsdappassword" | awk -F'=' '{print $2}')
+
 #--------------------------------------
 
 # Si hay más de dos parámetros, mostrar mensaje de error y salir.
@@ -46,7 +49,6 @@ read_password() {
 #--------------------------
 
 
-ldappassword=$(cat $lsdapdata | grep "lsdappassword" | awk -F'=' '{print $2}')
 
 # Función para crear una unidad organizativa (OU)
 function creaOU() {

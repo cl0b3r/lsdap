@@ -31,7 +31,7 @@ unfold_ldif() {
 
 deleteuser() {
     # Buscamos SOLO objetos que tengan el cn del usuario Y sean de la clase de usuarios (posixAccount o inetOrgPerson)
-    dn_objeto=$(sudo slapcat -a "(&(cn=$1)(objectClass=posixAccount))" | unfold_ldif | grep -i "^dn:" | sed 's/dn: //g')
+    dn_objeto=$(slapcat -a "(&(cn=$1)(objectClass=posixAccount))" | unfold_ldif | grep -i "^dn:" | sed 's/dn: //g')
     
     if [ -z "$dn_objeto" ]; then
         echo "User '$1' not found in LDAP."

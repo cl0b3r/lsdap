@@ -32,6 +32,7 @@ menu() {
         ou=""
         ins=""
         deleteoption=""
+        mvoption=""
         specificsearch=""
 
 
@@ -164,7 +165,42 @@ menu() {
                     
             done
         elif [ "$option" = "mv" ] || [ "$option" = "MV" ]; then
-            echo ""
+            until [ "$mvoption" = "e" ] || [ "$mvoption" = "E" ]; do
+            ou1=""
+            ou2=""
+                clear
+                echo -n "[-   What do you want to move?   -]
+            "
+                echo ""
+                echo "  (1) - Organizational Units."  
+                echo "  (2) - Users"
+                echo "  (3) - Groups"
+                echo "  (e) - Go Back."
+                echo " "
+                read -p "[#] Choose your option --> " mvoption
+                echo ""
+                
+                if [ "$mvoption" = "1" ]; then
+                    lsdap -ls ou
+                    read -p "[#] Name of the OU you want to move --> " ou1
+                    lsdap -mv ou $ou1
+                    read -p "Press enter to continue" x
+                    
+                elif [ "$mvoption" = "2" ]; then
+                    lsdap -ls user
+                    read -p "[#] Name of the user you want to move --> " mvuser
+                    lsdap -mv user $mvuser
+                    read -p "Press enter to continue" x
+
+                elif [ "$mvoption" = "3" ]; then
+                    lsdap -ls group
+                    read -p "[#] Name of the group you want to move --> " mvgroup
+                    lsdap -mv group $mvgroup
+                    read -p "Press enter to continue" x
+
+                fi
+                    
+            done
 
 
         fi

@@ -44,14 +44,25 @@ help() {
 
 Object can be 'ou', 'user' or 'group'.
 Name, username and host are always required.
-Repository link if you need more information: https://github.com/cl0b3r/lsdap
-"
+Repository link if you need more information: https://github.com/cl0b3r/lsdap"
+}
+invalidoption() {
+    echo "Invalid option, use -h for help."
 }
 
 arraypar=$(awk '{$1=""; print $0}' <<< "$*")
 arraypar=$(echo $arraypar)
+comprobar2=$(echo $2 | grep "-")
+comprobar3=$(echo $3 | grep "-")
 
-if [[ "$1" = "-ls" ]]; then
+
+if [[ $# -gt 3 ]]; then
+    invalidoption
+elif [[ "$comprobar2" != "" ]]; then
+    invalidoption
+elif [[ "$comprobar3" != "" ]]; then
+    invalidoption
+elif [[ "$1" = "-ls" ]]; then
     bash $lsdapbins/lsdapget.sh $arraypar
 elif [[ "$1" = "-new" ]]; then
     bash $lsdapbins/lsdapnew.sh $arraypar
