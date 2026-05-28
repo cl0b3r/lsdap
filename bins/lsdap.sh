@@ -32,10 +32,10 @@
 help() {
     echo -e "Usage: lsdap [option] [arguments]
      Options:
-      -ls  [object]         List objects in LDAP domain.
-      -new [object] [name]  Create a new object in LDAP domain. Name is required.
+      -ls  [object]         List objects in LDAP domain. Object is optional.
+      -new [object] [name]  Create a new object in LDAP domain. 
       -mv  [object] [name]  Move an object to another location in LDAP domain.
-      -rm  [object] [name]  Delete an object from LDAP domain. Name is required.
+      -rm  [object] [name]  Delete an object from LDAP domain. 
       -ssh [user@host]      Configure SSH access for a user in LDAP domain.
       -ad  [host]           Configure AnyDesk access for a user in LDAP domain.
       -menu                 Use lsdap menu tools.
