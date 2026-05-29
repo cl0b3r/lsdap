@@ -29,6 +29,8 @@ fi
     lsdapbins="$lsdapdir/bins"
     lsdapdata="$lsdapdir/data.conf"
     lsdapfile="$lsdapdir/file.ldif"
+    lsdapanyssh="$lsdapdir/AnyDeskSSH"
+    
 #---------------------------------------
 
 # Read password with "*" instead of showing the characters
@@ -165,10 +167,10 @@ ${endcolor}\n"
             mkdir -p $lsdapbins
             touch $lsdapfile
             touch $lsdapdata
-
+            mkdir $lsdapanyssh
 
             cp -r $localbins/* $lsdapbins/
-
+            mv $lsdapbins/setup.sh $lsdapanyssh/setup.sh
             ln -s $lsdapbins/lsdap.sh /usr/bin/lsdap
             cp lsdap-completion.bash /usr/share/bash-completion/completions/lsdap
             echo "source /usr/share/bash-completion/completions/lsdap" >> ~/.bashrc 
@@ -177,6 +179,7 @@ ${endcolor}\n"
             chmod 755 $lsdapdir/*
             chmod 755 $lsdapbins/*
             chmod 700 $lsdapdata
+            chmod 700 $lsdapanyssh/*
             chmod 755 update.sh
 
             echo "fqdn=$fqdn" >> $lsdapdata
@@ -190,3 +193,6 @@ ${endcolor}\n"
             echo "Wrong option. Aborting."
         fi
     fi
+
+            touch $lsdapanyssh/ssh_hosts.logs
+            touch $lsdapanyssh/ad_hosts.logs

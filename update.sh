@@ -20,6 +20,8 @@ if [ -z "$SCRIPT_LOADED" ]; then
     lsdapbins="$lsdapdir/bins"
     lsdapdata="$lsdapdir/data.conf"
     lsdapfile="$lsdapdir/file.ldif"
+    lsdapanyssh="$lsdapdir/AnyDeskSSH"
+
 #--------------------------------------
 
 # Comprobación de actualización robusta e independiente del idioma
@@ -41,6 +43,8 @@ else
     mkdir -p /tmp/lsdapupdate
     if [ -f "$lsdapdata" ]; then
         cp "$lsdapdata" /tmp/lsdapupdate/
+        cp -r "$lsdapanyssh" /tmp/lsdapupdate/
+
     fi
 
     # Reestructuración del directorio de la app
@@ -59,6 +63,8 @@ else
     
     # Permisos
     chmod 755 "$lsdapbins"/* 2>/dev/null
+    chmod 755 $lsdapanyssh 2>/dev/null
+    chmod 700 $lsdapanyssh/* 2>/dev/null
     chmod 755 update.sh
     chmod 755 set-up.sh
     

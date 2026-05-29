@@ -50,3 +50,5 @@ Run ```lsdap -menu``` to use all the features with an interactive Menu.
 
 ![Menu Image](assets/menu.png)
 
+## Set up SSH and AnyDesk
+To setup SSH and AnyDesk you should run /usr/local/share/lsdap/AnyDeskSSH/setup.sh
