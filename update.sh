@@ -39,12 +39,12 @@ else
     git reset --hard origin/$(git branch --show-current) > /dev/null 2>&1
     git pull > /dev/null 2>&1
 
-    # Salvaguarda de datos del usuario
+    # Guardar de datos del usuario
     mkdir -p /tmp/lsdapupdate
     if [ -f "$lsdapdata" ]; then
         cp "$lsdapdata" /tmp/lsdapupdate/
         cp -r "$lsdapanyssh" /tmp/lsdapupdate/
-
+        rm /tmp/lsdapupdate/AnyDeskSSH/*.sh 2>/dev/null
     fi
 
     # Reestructuración del directorio de la app
@@ -52,14 +52,18 @@ else
     mkdir -p "$lsdapbins"
     touch "$lsdapfile"
     
-    # Copiar nuevos ejecutables
-    cp -r $localbins/* "$lsdapbins/" 2>/dev/null
+
     
     # Restaurar data.conf si existía previamente
     if [ -f "/tmp/lsdapupdate/data.conf" ]; then
         cp -r /tmp/lsdapupdate/* "$lsdapdir/"
     fi
     rm -rf /tmp/lsdapupdate 
+    
+    # Copiar nuevos ejecutables
+    cp -r $localbins/* "$lsdapbins/" 2>/dev/null
+    cp "$lsdapbins/setup.sh" "$lsdapanyssh/setup.sh"
+    cp "$lsdapbins/port.sh" "$lsdapanyssh/port.sh"
     
     # Permisos
     chmod 755 "$lsdapbins"/* 2>/dev/null

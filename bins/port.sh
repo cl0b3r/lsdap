@@ -1,9 +1,32 @@
 #!/bin/bash
 
-LOG_FILE="/usr/local/share/lsdap/sshclients.log"
-touch "$LOG_FILE"
+# VARS
+    lsdapdir="/usr/local/share/lsdap"
+    lsdapanyssh="$lsdapdir/AnyDeskSSH"
+    
+#---------------------------------------
+
+
+logSSH="$lsdapanyssh/ssh_hosts.logs"
+logAnyDesk="$lsdapanyssh/ad_hosts.logs"
+logError="$lsdapanyssh/error.log"
 
 while true; do
-    # Usamos ncat con la opción --ssl
-    ncat -lk --ssl 45678 >> "$LOG_FILE" 2>&1
+    ncat -lk --ssl 45678 2>> "$logError" | while IFS= read -r linea; do
+        
+        case "$linea" in
+            "ssh:"*)
+                echo "${linea#ssh: }" >> "$logSSH"
+                ;;
+                
+            "ad:"*)
+                echo "${linea#ad: }" >> "$logAnyDesk"
+                ;;
+                
+            *)
+                echo "[Desconocido] $linea" >> "$logError"
+                ;;
+        esac
+    done    
+    sleep 2
 done
