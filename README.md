@@ -51,27 +51,31 @@ Run ```lsdap -menu``` to use all the features with an interactive Menu.
 
 ## Global directory and configuration
 The main folder for lsdap is /usr/local/share/lsdap, you can change your configuration editing data.conf.
- In that folder you will find:
-      - bins (Folder who contains all the binaries who use lsdap)
-      - data.conf (main configuration file)
-      - file.ldif (This is the file where goes LDAP objects schemas)
-      - AnyDeskSSH  (Folder with scripts, and logs for SSH and AnyDesk connections) 
+In that folder you will find:
+- bins (Folder who contains all the binaries who use lsdap)
+- data.conf (main configuration file)
+- file.ldif (This is the file where goes LDAP objects schemas)
+- AnyDeskSSH  (Folder with scripts, and logs for SSH and AnyDesk connections) 
 
 ## SSH and AnyDesk
 LSDAP also enables connections to your clients via SSH or AnyDesk. All SSH and AnyDesk configurations and scripts are stored in the "AnyDeskSSH" directory inside the main installation path. 
 
 You can connect using either command-line arguments or the interactive menu. The following sections explain how these features work.
 
+### Set up
 To set up SSH and AnyDesk, you should run `setup.sh` inside the "AnyDeskSSH" folder with `sudo`.
-
+```bash
+cd /usr/local/share/lsdap/AnyDeskSSH
+sudo set-up.sh
+```
 ### Get User Credentials
 There is a script in "AnyDeskSSH" called "port.sh". This script listens on port 45678 using `ncat` with SSL enabled to encrypt data transmission. 
 
 During the client installation, a new local user called "sshuser" is created with a random secure password, along with the AnyDesk ID and hostname. This information is then sent to the server using `ncat`.
 
 If the incoming message starts with:
-- `ssh:` It is saved to "ssh_hosts.logs"
-- `ad:` It is saved to "ad_hosts.logs"
+- ssh: It is saved to "ssh_hosts.logs"
+- ad: It is saved to "ad_hosts.logs"
  
 Otherwise, the message will be redirected to "error.log".
 
