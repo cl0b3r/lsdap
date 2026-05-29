@@ -168,9 +168,11 @@ ${endcolor}\n"
             touch $lsdapfile
             touch $lsdapdata
             mkdir $lsdapanyssh
-
+            touch $lsdapanyssh/ssh_hosts.logs
+            touch $lsdapanyssh/ad_hosts.logs
             cp -r $localbins/* $lsdapbins/
-            mv $lsdapbins/setup.sh $lsdapanyssh/setup.sh
+            rm $lsdapbins/set-up.sh
+            cp $lsdapbins/setup.sh $lsdapanyssh/setup.sh
             ln -s $lsdapbins/lsdap.sh /usr/bin/lsdap
             cp lsdap-completion.bash /usr/share/bash-completion/completions/lsdap
             echo "source /usr/share/bash-completion/completions/lsdap" >> ~/.bashrc 
@@ -194,5 +196,3 @@ ${endcolor}\n"
         fi
     fi
 
-            touch $lsdapanyssh/ssh_hosts.logs
-            touch $lsdapanyssh/ad_hosts.logs
