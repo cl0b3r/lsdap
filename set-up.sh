@@ -106,7 +106,7 @@ ${endcolor}\n"
             echo "127.0.1.1 $hostname" >> /etc/hosts
             echo "$serverip $serverfqdn $servername" >> /etc/hosts
 
-            sudo apt install libpam-ldap libnss-ldap nss-updatedb libnss-db nscd ldap-utils -y 
+            sudo apt install libpam-ldap libnss-ldap nss-updatedb libnss-db nscd ldap-utils ncat -y 
             sed -i '72s/^#//' /etc/ldap.conf
             sed -i '72s/hard/soft/' /etc/ldap.conf
             sed -i '129s/md5/crypt/' /etc/ldap.conf

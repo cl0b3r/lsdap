@@ -39,11 +39,10 @@ deleteuser() {
     fi
     
     ldapdelete -x -D "$admin" -w "$ldappassword" "$dn_objeto"
-    echo "User LDAP '$1' deleted."
 
     if id "$1" &>/dev/null; then
         userdel -r "$1" 2>/dev/null
-        echo "Linux user '$1' deleted."
+        echo "Linux and LDAP user '$1' deleted."
     fi
 }
 deletegroup() {

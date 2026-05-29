@@ -58,21 +58,7 @@ function creaOU() {
         exit
     else
         lsdap -ls ou
-        while [ "$existe" != "true" ]; do
-            read -p "¿Name of the OU you want to put $1 into, if theres no higher ou just press enter --> " opcion
-            if [ "$opcion" = "" ]; then
-                echo "Not a valid OU name. Please try again."
-                exit
-            else
-                ruta=$(slapcat | grep "^dn: ou=$opcion," | sed 's/dn: //g')
-                if [ "$ruta" != "" ]; then
-                    existe="true"
-                else
-                    echo "OU $opcion not exists in LDAP tree. Please try again."
-                fi
-            fi
-        done
-
+        read -p "¿Name of the OU you want to put $1 into, if theres no higher ou just press enter --> " opcion
         if [ "$opcion" = "" ]; then
             echo "dn: ou=$1,$dominio" > $lsdapfile
             echo "ou: $1" >> $lsdapfile
