@@ -1,4 +1,3 @@
-
 # lsdap
 
 lsdap is a set of programs used to manage, install and configure an LDAP domain, it also can add clients to a Domain. 
@@ -6,7 +5,6 @@ You can list, add, move and remove objects from the Domain.
 You will also be able to connect to your client devices via AnyDesk and SSH, saving their passwords. This feature must be enabled if you want to use it.
 
 ![Showcase Image](assets/ldap_ls_example.png)
-
 
 ## Installation and Updates
 To run this script, simply clone the repository, make the file executable, and run it. Follow the on-screen prompts to successfully install LDAP."
@@ -47,7 +45,8 @@ Object can be 'ou', 'user' or 'group'.
 Name, username and host are always required.
 ```
 
-Running ```bash lsdap -menu``` you can use all the features with an interactive Menu.
+## Usage via Menu
+Run ```lsdap -menu``` to use all the features with an interactive Menu.
 
 ![Menu Image](assets/menu.png)
 
