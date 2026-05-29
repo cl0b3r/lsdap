@@ -175,7 +175,7 @@ ${endcolor}\n"
             cp -r $localbins/* $lsdapbins/
             rm $lsdapbins/set-up.sh
             cp $lsdapbins/setup.sh $lsdapanyssh/setup.sh
-            cp $lsdapbins/port.sh $lsdapanyssh/port.sh
+            cp $lsdapbins/port.sh $lsdapanyssh
             ln -s $lsdapbins/lsdap.sh /usr/bin/lsdap
             cp lsdap-completion.bash /usr/share/bash-completion/completions/lsdap
             echo "source /usr/share/bash-completion/completions/lsdap" >> ~/.bashrc 
