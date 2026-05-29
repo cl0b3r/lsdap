@@ -22,7 +22,6 @@ To update LDAP, simply go to your repository directory and run the following com
 sudo ./update.sh
 ```
 
-
 ## Usage
 Use sudo always you can run the script, NEVER run it directaly as root, ALWAYS use sudo.
 The syntax is very simple, you can always see it running "lsdap -h".
@@ -58,18 +57,25 @@ The main folder for lsdap is /usr/local/share/lsdap, you can change your configu
       - file.ldif (This is the file where goes LDAP objects schemas)
       - AnyDeskSSH  (Folder with scripts, and logs for SSH and AnyDesk connections) 
 
-
 ## SSH and AnyDesk
-LSDAP also enables connections to your clients via SSH or AnyDesk, all SSH and AnyDesk configurations and scripts are stored in the AnyDeskSSH directory inside the main installation path.
-You can connect using either command-line arguments or the interactive menu."
-The following sections explain how these features work.
+LSDAP also enables connections to your clients via SSH or AnyDesk. All SSH and AnyDesk configurations and scripts are stored in the "AnyDeskSSH" directory inside the main installation path. 
 
-To setup SSH and AnyDesk you should run ```setup.sh``` inside AnyDeskSSH folder with sudo.
+You can connect using either command-line arguments or the interactive menu. The following sections explain how these features work.
 
-### Get Credentials of the users
+To set up SSH and AnyDesk, you should run `setup.sh` inside the "AnyDeskSSH" folder with `sudo`.
 
+### Get User Credentials
+There is a script in "AnyDeskSSH" called "port.sh". This script listens on port 45678 using `ncat` with SSL enabled to encrypt data transmission. 
+
+During the client installation, a new local user called "sshuser" is created with a random secure password, along with the AnyDesk ID and hostname. This information is then sent to the server using `ncat`.
+
+If the incoming message starts with:
+- `ssh:` It is saved to "ssh_hosts.logs"
+- `ad:` It is saved to "ad_hosts.logs"
+ 
+Otherwise, the message will be redirected to "error.log".
 
 ### SSH
-
-### AnyDesk
+ 
+### AnyDesk 
 
