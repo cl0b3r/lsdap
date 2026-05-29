@@ -50,5 +50,26 @@ Run ```lsdap -menu``` to use all the features with an interactive Menu.
 
 ![Menu Image](assets/menu.png)
 
-## Set up SSH and AnyDesk
-To setup SSH and AnyDesk you should run /usr/local/share/lsdap/AnyDeskSSH/setup.sh
+## Global directory and configuration
+The main folder for lsdap is /usr/local/share/lsdap, you can change your configuration editing data.conf.
+ In that folder you will find:
+      - bins (Folder who contains all the binaries who use lsdap)
+      - data.conf (main configuration file)
+      - file.ldif (This is the file where goes LDAP objects schemas)
+      - AnyDeskSSH  (Folder with scripts, and logs for SSH and AnyDesk connections) 
+
+
+## SSH and AnyDesk
+LSDAP also enables connections to your clients via SSH or AnyDesk, all SSH and AnyDesk configurations and scripts are stored in the AnyDeskSSH directory inside the main installation path.
+You can connect using either command-line arguments or the interactive menu."
+The following sections explain how these features work.
+
+To setup SSH and AnyDesk you should run ```setup.sh``` inside AnyDeskSSH folder with sudo.
+
+### Get Credentials of the users
+
+
+### SSH
+
+### AnyDesk
+
