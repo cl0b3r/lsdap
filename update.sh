@@ -63,7 +63,6 @@ else
     # Copiar nuevos ejecutables
     cp -r $localbins/* "$lsdapbins/" 2>/dev/null
     cp "$lsdapbins/setup.sh" "$lsdapanyssh/setup.sh"
-    cp "$lsdapbins/port.sh" "$lsdapanyssh/port.sh"
     
     # Permisos
     chmod 755 "$lsdapbins"/* 2>/dev/null

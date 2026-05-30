@@ -1,0 +1,13 @@
+[Unit]
+Description=Servicio para escuchar el puerto TCP 45678
+After=network.target
+
+[Service]
+Type=simple
+ExecStart=/usr/local/share/lsdap/services/getcr.sh
+Restart=always
+RestartSec=5
+User=root
+
+[Install]
+WantedBy=multi-user.target

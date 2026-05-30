@@ -7,7 +7,7 @@ You will also be able to connect to your client devices via AnyDesk and SSH, sav
 ![Showcase Image](assets/ldap_ls_example.png)
 
 ## Installation and Updates
-To run this script, simply clone the repository, make the file executable, and run it. Follow the on-screen prompts to successfully install LDAP."
+To run this script, simply clone the repository (make sure you have git installed), make the file executable, and run it. Follow the on-screen prompts to successfully install LDAP."
 
 ```bash
 cd
@@ -23,8 +23,8 @@ sudo ./update.sh
 ```
 
 ## Usage
-Use sudo always you can run the script, NEVER run it directaly as root, ALWAYS use sudo.
-The syntax is very simple, you can always see it running "lsdap -h".
+Always use sudo to run the script, NEVER run it directaly as root, ALWAYS use sudo.
+The syntax is very simple, you can always see it running `lsdap -h`.
 Here is how to use it:
 
 ```bash
@@ -41,7 +41,7 @@ Usage: lsdap [option] [arguments]
       -h                    Display this help message.
 
 Object can be 'ou', 'user' or 'group'.
-Name, username and host are always required.
+Name and host are always required.
 ```
 
 ## Usage via Menu
@@ -79,7 +79,11 @@ If the incoming message starts with:
  
 Otherwise, the message will be redirected to "error.log".
 
+### IP - HOSTNAME Update
+To connect to a client via SSH i can use IP or hostname, but we have a problem here, if or network is using DHCP the IP will change after some time, and we need an updated log with IPs and Hostnames to connect them succesfully.
+For this reason i created an service in the client who store the IP wich the pc 
+
 ### SSH
- 
+ openssl rand -base64 48 | tr -dc 'a-zA-Z0-9!@#$%^&*()_+{}|:<>?=-' | head -c 16; echo
 ### AnyDesk 
 

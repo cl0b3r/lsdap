@@ -2,14 +2,15 @@
 
 # VARS
     lsdapdir="/usr/local/share/lsdap"
-    lsdapanyssh="$lsdapdir/AnyDeskSSH"
+    logs="$lsdapdir/logs"
     
 #---------------------------------------
 
 
-logSSH="$lsdapanyssh/ssh_hosts.logs"
-logAnyDesk="$lsdapanyssh/ad_hosts.logs"
-logError="$lsdapanyssh/error.log"
+logSSH="$logs/ssh_hosts.logs"
+logAnyDesk="$logs/ad_hosts.logs"
+logIH="$logs/ih_hosts.logs"
+logError="$logs/error.logs"
 
 while true; do
     ncat -lk --ssl 45678 2>> "$logError" | while IFS= read -r linea; do
@@ -22,9 +23,13 @@ while true; do
             "ad:"*)
                 echo "${linea#ad: }" >> "$logAnyDesk"
                 ;;
+
+            "ih:"*)
+                echo "${linea#ih: }" >> "$logIH"
+                ;;
                 
             *)
-                echo "[Desconocido] $linea" >> "$logError"
+                echo "$linea" >> "$logError"
                 ;;
         esac
     done    

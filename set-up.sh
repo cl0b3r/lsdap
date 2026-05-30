@@ -29,7 +29,8 @@ fi
     lsdapbins="$lsdapdir/bins"
     lsdapdata="$lsdapdir/data.conf"
     lsdapfile="$lsdapdir/file.ldif"
-    lsdapanyssh="$lsdapdir/AnyDeskSSH"
+    lsdapservices="$lsdapdir/services"
+    $logs="$lsdapdir/logs"
     
 #---------------------------------------
 
@@ -167,25 +168,32 @@ ${endcolor}\n"
             mkdir -p $lsdapbins
             touch $lsdapfile
             touch $lsdapdata
-            mkdir $lsdapanyssh
-            touch $lsdapanyssh/ssh_hosts.logs
-            touch $lsdapanyssh/ad_hosts.logs
-            touch $lsdapanyssh/error.logs
+            cp -r ./services $lsdapdir/
+
+            mkdir $logs
+            touch $logs/ssh_hosts.logs
+            touch $logs/ad_hosts.logs
+            touch $logs/ip_hosts.logs
+            touch $logs/error.logs
 
             cp -r $localbins/* $lsdapbins/
-            cp $lsdapbins/setup.sh $lsdapanyssh/setup.sh
-            cp $localbins/port.sh $lsdapanyssh/port.sh
             ln -s $lsdapbins/lsdap.sh /usr/bin/lsdap
             cp lsdap-completion.bash /usr/share/bash-completion/completions/lsdap
             echo "source /usr/share/bash-completion/completions/lsdap" >> ~/.bashrc 
             source ~/.bashrc
-            
+
+
+            # Permissions
             chmod 755 $lsdapdir/*
             chmod 755 $lsdapbins/*
+            chmod 755 $lsdapservices/*
             chmod 700 $lsdapdata
-            chmod 700 $lsdapanyssh/*
+            chmod 700 $logs/*
             chmod 755 update.sh
 
+            echo "# FORMAT --> ssh: host password" > $logs/ssh_hosts.logs
+            echo "# FORMAT --> ad: host AnyDesk_ID" > $logs/ad_hosts.logs
+            echo "# FORMAT --> ih: host IP" > $logs/ip_hosts.logs
             echo "fqdn=$fqdn" >> $lsdapdata
             echo "lastuid=5000" >> $lsdapdata
             echo "lastgid=5000" >> $lsdapdata
