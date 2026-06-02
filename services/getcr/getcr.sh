@@ -19,14 +19,18 @@ ncat -lk --ssl 45678 2>> "$logError" | while IFS= read -r linea; do
     case "$linea" in
         "ssh:"*)
             echo "${linea#ssh: }" >> "$logSSH"
+            chmod 700 "$logIH"
+
             ;;
 
         "ad:"*)
             echo "${linea#ad: }" >> "$logAnyDesk"
+            chmod 700 "$logAnyDesk"
             ;;
 
         "ih:"*)
             echo "${linea#ih: }" >> "$logIH"
+            chmod 700 "$logIH"
             ;;
 
         *)
