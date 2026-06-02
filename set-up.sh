@@ -136,12 +136,18 @@ ${endcolor}\n"
             sed -i "26s/use_authtok//" /etc/pam.d/common-password
             echo "session required	pam_mkhomedir.so skel=/etc/skel/ umask=0022" >> /etc/pam.d/common-session
 
-            # Credentials Setup
+            # SSH credentials Setup
             sshcontrasena=$(openssl rand -base64 48 | cut -c1-16)
             sudo useradd -m -s /bin/bash sshuser && echo "sshuser:$sshcontrasena" | sudo chpasswd
-            
-            # Send credentials to the server
             echo "ssh: $hostname $sshcontrasena" | ncat --ssl $serverip 45678
+
+            # Host-IP setup
+            HOSTNAME=$(hostname)
+            CURRENT_IP_CIDR=$(ip -o -4 addr show | awk '$2 != "lo" {print $4}' | head -n 1)
+
+            MESSAGE="(ih: ${HOSTNAME} ${CURRENT_IP_CIDR})"
+            echo "$MESSAGE" | ncat --ssl "$serverip" "$45678"
+
 
             reboot now
 
