@@ -1,13 +1,15 @@
 [Unit]
-Description=Servicio para escuchar el puerto TCP 45678
+Description=Servicio de Redirección de Logs LSDAP (getcr)
 After=network.target
 
 [Service]
 Type=simple
-ExecStart=/usr/local/share/lsdap/services/getcr.sh
-Restart=always
-RestartSec=5
 User=root
+Group=root
+WorkingDirectory=/usr/local/share/lsdap/services/getcr
+ExecStart=/usr/local/share/lsdap/services/getcr/getcr.sh
+Restart=always
+RestartSec=3
 
 [Install]
 WantedBy=multi-user.target

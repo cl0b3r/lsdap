@@ -10,7 +10,16 @@ if [ "$confirmation" = "Y" ] || [ "$confirmation" = "y" ]; then
 	sed -i '\#source /usr/share/bash-completion/completions/lsdap#d' ~/.bashrc
     rm /usr/bin/lsdap
 	rm /usr/share/bash-completion/completions/lsdap
+
+	#Eliminate services
+	sudo systemctl stop getcr.service
+	sudo systemctl disable getcr.service
+	sudo rm /etc/systemd/system/getcr.service
+	sudo systemctl daemon-reload
+	sudo systemctl reset-failed
+
 	echo "Uninstalled"
+
 else 
 	echo "[#] ABORTING [#]"
 fi

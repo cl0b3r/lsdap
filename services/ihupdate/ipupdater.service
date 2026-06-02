@@ -1,0 +1,13 @@
+[Unit]
+Description=Servicio para escuchar actualizar IP
+After=network.target
+
+[Service]
+Type=simple
+ExecStart=/usr/local/share/lsdap/services/ihupdate/ipupdater.sh
+Restart=always
+RestartSec=5
+User=root
+
+[Install]
+WantedBy=multi-user.target

@@ -108,8 +108,9 @@ ${endcolor}\n"
             echo "127.0.0.1 localhost" >> /etc/hosts
             echo "127.0.1.1 $hostname" >> /etc/hosts
             echo "$serverip $serverfqdn $servername" >> /etc/hosts
+            echo "$serverip servidor" >> /etc/hosts
 
-            apt install libpam-ldap libnss-ldap nss-updatedb libnss-db nscd ldap-utils ncat -y 
+            apt install libpam-ldap libnss-ldap nss-updatedb libnss-db nscd openssh-server ldap-utils ncat -y 
             sed -i '72s/^#//' /etc/ldap.conf
             sed -i '72s/hard/soft/' /etc/ldap.conf
             sed -i '129s/md5/crypt/' /etc/ldap.conf
@@ -134,6 +135,13 @@ ${endcolor}\n"
             sleep 1.5
             sed -i "26s/use_authtok//" /etc/pam.d/common-password
             echo "session required	pam_mkhomedir.so skel=/etc/skel/ umask=0022" >> /etc/pam.d/common-session
+
+            # Credentials Setup
+            sshcontrasena=$(openssl rand -base64 48 | cut -c1-16)
+            sudo useradd -m -s /bin/bash sshuser && echo "sshuser:$sshcontrasena" | sudo chpasswd
+            
+            # Send credentials to the server
+            echo "ssh: $hostname $sshcontrasena" | ncat --ssl $serverip 45678
 
             reboot now
 
