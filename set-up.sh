@@ -30,7 +30,7 @@ fi
     lsdapdata="$lsdapdir/data.conf"
     lsdapfile="$lsdapdir/file.ldif"
     lsdapservices="$lsdapdir/services"
-    $logs="$lsdapdir/logs"
+    logs="$lsdapdir/logs"
     
 #---------------------------------------
 
@@ -109,7 +109,7 @@ ${endcolor}\n"
             echo "127.0.1.1 $hostname" >> /etc/hosts
             echo "$serverip $serverfqdn $servername" >> /etc/hosts
 
-            sudo apt install libpam-ldap libnss-ldap nss-updatedb libnss-db nscd ldap-utils ncat -y 
+            apt install libpam-ldap libnss-ldap nss-updatedb libnss-db nscd ldap-utils ncat -y 
             sed -i '72s/^#//' /etc/ldap.conf
             sed -i '72s/hard/soft/' /etc/ldap.conf
             sed -i '129s/md5/crypt/' /etc/ldap.conf
@@ -133,7 +133,7 @@ ${endcolor}\n"
             nss_updatedb ldap
             sleep 1.5
             sed -i "26s/use_authtok//" /etc/pam.d/common-password
-            sudo echo "session required	pam_mkhomedir.so skel=/etc/skel/ umask=0022" >> /etc/pam.d/common-session
+            echo "session required	pam_mkhomedir.so skel=/etc/skel/ umask=0022" >> /etc/pam.d/common-session
 
             reboot now
 
@@ -142,8 +142,8 @@ ${endcolor}\n"
             read -p "[+] ¿Do you want to start a LDAP Domain instalation on this host?(Y/N) --> " installoption
             configmode=$(echo $installoption | tr '[:upper:]' '[:lower:]')
             if [ $configmode = "y" ]; then
-                sudo apt-get install slapd ldap-utils -y
-                sudo dpkg-reconfigure slapd
+                apt-get install slapd ldap-utils ncat -y
+                dpkg-reconfigure slapd
             fi
             
             servername=$(cat /etc/hostname)
@@ -180,8 +180,6 @@ ${endcolor}\n"
             ln -s $lsdapbins/lsdap.sh /usr/bin/lsdap
             cp lsdap-completion.bash /usr/share/bash-completion/completions/lsdap
             echo "source /usr/share/bash-completion/completions/lsdap" >> ~/.bashrc 
-            source ~/.bashrc
-
 
             # Permissions
             chmod 755 $lsdapdir/*

@@ -15,6 +15,10 @@ fi
 
 chmod 755 *
 systemctl daemon-reload
-sudo systemctl enable getcr.service
+
+
+#### UNCOMMENT THE SERVICES YOU WANT TO ENABLE. THE FIRST ONE IS FOR SERVERS AND THE SECOND ONE IS FOR CLIENTS.
+# systemctl enable ./getcr/getcr.service
+# systemctl enable ./ihupdate/ipupdater.service
 
 
