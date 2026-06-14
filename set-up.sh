@@ -155,7 +155,16 @@ ${endcolor}\n"
             SystemAccount=true
             EOF'
 
+            # Servicio para actualizar la IP del cliente en el servidor
+            mkdir -p /usr/local/share/lsdap/services
 
+            cp ./services/ihupdate/ipupdater.sh /usr/local/share/lsdap/services
+            chmod +x /usr/local/share/lsdap/services/ipupdater.sh
+            cp ./services/ihupdate/ipupdater.service /etc/systemd/system
+            systemctl daemon-reload
+            systemctl restart getcr.service
+
+            systemctl daemon-reload
             reboot now
 
         elif [ "$configmode" = "s" ]; then

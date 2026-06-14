@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # CONFIGURACIÓN
-SERVER_IP="IP_DEL_SERVIDOR"
+SERVER_IP=$(cat /etc/hosts | grep "servidor" | awk '{print $1}')
 SERVER_PORT="45678"
 INTERVAL=60 # Tiempo en segundos para comprobar si cambió la IP
 

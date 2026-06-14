@@ -17,7 +17,6 @@ chmod 755 ./getcr/getcr.sh
 systemctl daemon-reload
 
 
-#### UNCOMMENT THE SERVICES YOU WANT TO ENABLE. THE FIRST ONE IS FOR SERVERS AND THE SECOND ONE IS FOR CLIENTS.
 mv ./getcr/getcr.service /etc/systemd/system/getcr.service
 systemctl daemon-reload
 systemctl restart getcr.service
